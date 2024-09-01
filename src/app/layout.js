@@ -1,17 +1,24 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const roboto = Roboto({ subsets: ["latin"] });
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
 
 export const metadata = {
-  title: "Eko Lance Steller Developer Challenge",
+  title: "Eko Lance Stellar Developer Challenge",
   description: "Building a Simple DeFi Liquidity Pool",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <section className="flex items-center flex-col justify-center h-full min-h-[100vh] over-flow-y-auto w-full">
+          {children}
+        </section>
+      </body>
     </html>
   );
 }
