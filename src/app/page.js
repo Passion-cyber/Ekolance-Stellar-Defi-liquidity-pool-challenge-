@@ -1,7 +1,8 @@
 "use client";
-import Link from "next/link";
+import Link from "@mui/material/Link";
 import { useState } from "react";
 import { Button } from "@/components";
+import NextLink from "next/link";
 import {
   Keypair,
   SorobanRpc,
@@ -17,13 +18,13 @@ import {
 const server = new SorobanRpc.Server("https://soroban-testnet.stellar.org");
 
 function App() {
-  const [keypair, setKeypair] = useState(null);
   const [log, setLog] = useState("");
-  const [liquidityPoolId, setLiquidityPoolId] = useState("");
+  const [keypair, setKeypair] = useState(null);
   const [assetName, setAssetName] = useState("");
   const [tokenAAmount, setTokenAAmount] = useState("");
   const [tokenBAmount, setTokenBAmount] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
+  const [liquidityPoolId, setLiquidityPoolId] = useState("");
   const [loading, setLoading] = useState({
     generateKeypair: false,
     fundAccount: false,
@@ -100,12 +101,13 @@ function App() {
         .build();
 
       transaction.sign(keypair);
-      const result = await server.sendTransaction(transaction);
+      const response = await server.sendTransaction(transaction);
       addLog(
         <>
           Liquidity Pool created. Transaction URL:{" "}
           <Link
-            href={`https://stellar.expert/explorer/testnet/tx/${result.hash}`}
+            component={NextLink}
+            href={`https://stellar.expert/explorer/testnet/tx/${response.hash}`}
             target="_blank"
             rel="noopener noreferrer"
             color="secondary"
@@ -147,12 +149,14 @@ function App() {
         .build();
 
       transaction.sign(keypair);
-      const result = await server.sendTransaction(transaction);
+      const response = await server.sendTransaction(transaction);
+      console.log(response, "Response from with");
       addLog(
         <>
           Withdrawal successful. Transaction URL:{" "}
           <Link
-            href={`https://stellar.expert/explorer/testnet/tx/${result.hash}`}
+            component={NextLink}
+            href={`https://stellar.expert/explorer/testnet/tx/${response.hash}`}
             target="_blank"
             rel="noopener noreferrer"
             color="secondary"
@@ -269,8 +273,10 @@ function App() {
           </blockquote>
         </div>
         <div>
-          <div className="p-3 bg-[#e8f5e9] max-h-[400px] overflow-auto">
-            <h4 className="text-[#388e3c] font-semibold ">Latest Log</h4>
+          <div className="p-3 bg-[#e8f5e9] border shadow max-h-[400px] overflow-auto">
+            <h4 className="text-[#198F51] text-base font-semibold ">
+              Latest Log
+            </h4>
             <p className="text-sm font-normal">{log}</p>
           </div>
         </div>
