@@ -1,8 +1,9 @@
 "use client";
-import Link from "@mui/material/Link";
 import { useState } from "react";
-import { Button } from "@/components";
 import NextLink from "next/link";
+import Link from "@mui/material/Link";
+import { Button } from "@/components";
+
 import {
   Keypair,
   SorobanRpc,
@@ -47,6 +48,7 @@ function App() {
   const fundAccount = async () => {
     if (!keypair) {
       addLog("Please generate a keypair first.");
+      toast.error("Please generate a keypair first");
       return;
     }
 
@@ -200,7 +202,7 @@ function App() {
               </div>
             </div>
 
-            <div className="w-full flex  flex-col md:flex-row items-center gap-3">
+            <div className="w-full flex  flex-col md:flex-row items-center mt-5 md:mt-12 gap-3">
               <input
                 type="text"
                 placeholder="Assset Name"
